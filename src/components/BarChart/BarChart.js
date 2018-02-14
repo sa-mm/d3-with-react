@@ -37,9 +37,9 @@ const BarChart = props => {
           return (
             <rect
               key={`rect${i}`}
-              x={padding + i * barWidth}
+              x={1 + padding + i * barWidth}
               y={yScale(d[1])}
-              width={barWidth - 1}
+              width={barWidth - 2}
               height={height - padding - yScale(d[1])}
               fill="url(#RectGradient)"
             />

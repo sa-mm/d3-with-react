@@ -13,11 +13,11 @@ export const BottomAxis = props => {
     >
       <line x1="0" y1="0" x2={width} y2="0" strokeWidth="0.10" stroke="black" />
       {data.map((d, idx) => {
-        const tickPosition = idx * barWidth;
+        const tickPosition = idx * barWidth + 1;
         return (
           <g
             key={`axis-tick-${idx}`}
-            transform={`translate(${(barWidth - 1) / 2},0)`}
+            transform={`translate(${(barWidth - 2) / 2},0)`}
           >
             <line
               x1={tickPosition}

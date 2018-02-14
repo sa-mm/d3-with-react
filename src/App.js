@@ -17,7 +17,7 @@ class App extends Component {
         <div style={{ width: "100%" }}>
           <div style={{ margin: "10px" }}>
             <BarChart
-              data={[["a", 10], ["b", 15], ["c", 30], ["d", 25]]}
+              data={[["a", 10], ["b", 15], ["c", 30], ["d", 25], ["e", 50]]}
               height={50}
               width={100}
             />
