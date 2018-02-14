@@ -17,7 +17,7 @@ export const BottomAxis = props => {
         return (
           <g
             key={`axis-tick-${idx}`}
-            transform={`translate(${barWidth / 2 - 1},0)`}
+            transform={`translate(${(barWidth - 1) / 2},0)`}
           >
             <line
               x1={tickPosition}
