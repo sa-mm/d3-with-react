@@ -1,5 +1,5 @@
 import React from "react";
-import { max } from "d3-array";
+import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import {
   line,
@@ -23,8 +23,10 @@ const LineChart = props => {
     bottom: 5,
     left: 5
   };
+
+  const [yMin, yMax] = extent(data, d => d.value);
   const yScale = scaleLinear()
-    .domain([0, max(data, d => d.value)])
+    .domain([yMin - 2, yMax + 2])
     .range([height - padding.top - padding.bottom, 0]);
 
   const xOffset = width / data.length;
