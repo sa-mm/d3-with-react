@@ -3,4 +3,4 @@ export default LineChart;
 
 export { HappyFisherGradient, SaintPetersburgGradient } from "./Gradients";
 
-export { PlottedAreaContainer } from "./PlottedArea";
+export { WrappedPlottedArea as PlottedArea } from "./PlottedArea";

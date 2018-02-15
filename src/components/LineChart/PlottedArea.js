@@ -1,6 +1,7 @@
 import React from "react";
+import withTooltip from "../withTooltip";
 
-export const PlottedArea = props => {
+const PlottedArea = props => {
   const {
     xOffset,
     xPadding,
@@ -46,27 +47,29 @@ export const PlottedArea = props => {
   );
 };
 
-export class PlottedAreaContainer extends React.Component {
-  state = {
-    hasHover: null
-  };
+// export class PlottedAreaContainer extends React.Component {
+//   state = {
+//     hasHover: null
+//   };
 
-  mouseEnterHandler = index => () => {
-    this.setState({ hasHover: index });
-  };
-  mouseLeaveHandler = index => () => {
-    this.setState({ hasHover: null });
-  };
-  render() {
-    const { hasHover } = this.state;
+//   mouseEnterHandler = index => () => {
+//     this.setState({ hasHover: index });
+//   };
+//   mouseLeaveHandler = index => () => {
+//     this.setState({ hasHover: null });
+//   };
+//   render() {
+//     const { hasHover } = this.state;
 
-    return (
-      <PlottedArea
-        {...this.props}
-        mouseEnterHandler={this.mouseEnterHandler}
-        mouseLeaveHandler={this.mouseLeaveHandler}
-        hasHover={hasHover}
-      />
-    );
-  }
-}
+//     return (
+//       <PlottedArea
+//         {...this.props}
+//         mouseEnterHandler={this.mouseEnterHandler}
+//         mouseLeaveHandler={this.mouseLeaveHandler}
+//         hasHover={hasHover}
+//       />
+//     );
+//   }
+// }
+
+export const WrappedPlottedArea = withTooltip(PlottedArea);

@@ -12,7 +12,7 @@ import SVG from "../SVG";
 import {
   HappyFisherGradient,
   SaintPetersburgGradient,
-  PlottedAreaContainer
+  PlottedArea
 } from "./index";
 
 const LineChart = props => {
@@ -53,9 +53,7 @@ const LineChart = props => {
       </defs>
 
       <g transform={`translate(${padding.left},${padding.top})`}>
-        <PlottedAreaContainer
-          {...{ xOffset, xPadding, pathLine, data, yScale }}
-        />
+        <PlottedArea {...{ xOffset, xPadding, pathLine, data, yScale }} />
 
         {/* xAxis */}
         <g transform={`translate(0, ${height - padding.top - padding.bottom})`}>
