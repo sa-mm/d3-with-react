@@ -3,13 +3,13 @@ import Circle from "./Circle";
 import LinearGradient from "./LinearGradient";
 
 const SVG = props => {
-  const cxOrigins = Array.from(Array(5), (x, i) => 50 + i * 75);
+  const cxOrigins = Array.from(Array(5), (x, i) => 10 + i * 20);
   const gradientTransforms = Array.from(Array(5), (x, i) => 65 + i * 5);
   return (
     <svg
       width="100%"
       height="100%"
-      viewBox="0 0 200 200"
+      viewBox="0 0 100 25"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
@@ -29,8 +29,8 @@ const SVG = props => {
           <Circle
             key={`circle${i}`}
             cx={cx}
-            cy="50"
-            r="50"
+            cy="10"
+            r="10"
             fill={`url(#CircleGradient${i})`}
           />
         ))}
