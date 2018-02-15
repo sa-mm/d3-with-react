@@ -1,4 +1,4 @@
 import LineChart from "./LineChart";
 export default LineChart;
 
-export { HappyFisherGradient } from "./Gradients";
+export { HappyFisherGradient, SaintPetersburgGradient } from "./Gradients";

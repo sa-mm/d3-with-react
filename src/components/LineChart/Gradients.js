@@ -8,3 +8,12 @@ export const HappyFisherGradient = props => {
     </linearGradient>
   );
 };
+
+export const SaintPetersburgGradient = props => {
+  return (
+    <linearGradient id="SaintPetersburgGradient" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stopColor="#f5f7fa" />
+      <stop offset="100%" stopColor="#c3cfe2" />
+    </linearGradient>
+  );
+};

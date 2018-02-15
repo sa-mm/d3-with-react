@@ -1,5 +1,5 @@
 import React from "react";
-import { scaleLinear, scaleOrdinal } from "d3-scale";
+import { scaleLinear } from "d3-scale";
 import { max } from "d3-array";
 import SVG from "../SVG";
 
@@ -19,9 +19,9 @@ const BarChart = props => {
   const padding = 5;
 
   const barWidth = (width - padding) / data.length;
-  const xScale = scaleOrdinal()
-    .domain(data.map(d => d[0]))
-    .range([padding, width - padding]); //not getting used at all…
+  // const xScale = scaleOrdinal()
+  //   .domain(data.map(d => d[0]))
+  //   .range([padding, width - padding]); //not getting used at all…
 
   const yScale = scaleLinear()
     .domain([0, max(data, d => d[1])])

@@ -5,15 +5,25 @@ import LineChart from "./components/LineChart";
 import "./App.css";
 
 class App extends Component {
-  state = { linechart: true };
+  state = { linechart: true, currentCurve: "curveMonotoneX" };
   clickHandler = name => () => {
     this.setState({
       [name]: !this.state[name]
     });
   };
 
+  curveClick = curve => () => {
+    this.setState({ currentCurve: curve });
+  };
+
   render() {
-    const { circles, barchart, linechart } = this.state;
+    const { circles, barchart, linechart, currentCurve } = this.state;
+    const curves = [
+      "curveMonotoneX",
+      "curveNatural",
+      "curveLinear",
+      "curveBasis"
+    ];
     return (
       <div className="App">
         <div
@@ -54,9 +64,25 @@ class App extends Component {
               { letter: "d", value: 15 },
               { letter: "e", value: 30 }
             ]}
+            curve={currentCurve}
           />
         </div>
-        <p>Here's a linechart…</p>
+        <p>
+          A line chart using different curves{" "}
+          {curves.map((curve, i) => {
+            return (
+              <span key={`curve-desc-${i}`}>
+                <span className="link" onClick={this.curveClick(curve)}>
+                  {curve}
+                </span>
+                {i === 0 ? " (the default)" : ""}
+                {i === curves.length - 1 ? "." : ", "}
+              </span>
+            );
+          })}{" "}
+          Adding a gradient to the line and points, here, doesn't seem to
+          confuse things.
+        </p>
       </div>
     );
   }

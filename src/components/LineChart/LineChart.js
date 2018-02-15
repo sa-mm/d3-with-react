@@ -1,12 +1,18 @@
 import React from "react";
 import { max } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import { line } from "d3-shape";
+import {
+  line,
+  curveMonotoneX,
+  curveNatural,
+  curveLinear,
+  curveBasis
+} from "d3-shape";
 import SVG from "../SVG";
-import { HappyFisherGradient } from "./index";
+import { HappyFisherGradient, SaintPetersburgGradient } from "./index";
 
 const LineChart = props => {
-  const { height, width, data } = props;
+  const { height, width, data, curve } = props;
   const padding = {
     top: 5,
     right: 5,
@@ -20,20 +26,30 @@ const LineChart = props => {
   const xOffset = width / data.length;
   const xPadding = 5;
 
+  const curveHash = {
+    curveMonotoneX,
+    curveNatural,
+    curveLinear,
+    curveBasis
+  };
+
   const pathLine = line()
     .x((d, i) => xPadding + i * xOffset)
-    .y(d => yScale(d.value));
+    .y(d => yScale(d.value))
+    .curve(curveHash[curve]);
 
   return (
     <SVG {...{ height, width }}>
       <defs>
+        {/* Pulling the Gradients out seems to make sense, but then you have to remember to id them correctly. */}
         <HappyFisherGradient />
+        <SaintPetersburgGradient />
       </defs>
 
       <g transform={`translate(${padding.left},${padding.top})`}>
         <path
           fill="none"
-          stroke="steelblue"
+          stroke="url(#SaintPetersburgGradient)"
           strokeLinejoin="round"
           strokeLinecap="round"
           strokeWidth="0.25"
