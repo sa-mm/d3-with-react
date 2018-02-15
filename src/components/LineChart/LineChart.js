@@ -9,7 +9,11 @@ import {
   curveBasis
 } from "d3-shape";
 import SVG from "../SVG";
-import { HappyFisherGradient, SaintPetersburgGradient } from "./index";
+import {
+  HappyFisherGradient,
+  SaintPetersburgGradient,
+  PlottedAreaContainer
+} from "./index";
 
 const LineChart = props => {
   const { height, width, data, curve } = props;
@@ -47,28 +51,9 @@ const LineChart = props => {
       </defs>
 
       <g transform={`translate(${padding.left},${padding.top})`}>
-        <path
-          fill="none"
-          stroke="url(#SaintPetersburgGradient)"
-          strokeLinejoin="round"
-          strokeLinecap="round"
-          strokeWidth="0.25"
-          d={pathLine(data)}
+        <PlottedAreaContainer
+          {...{ xOffset, xPadding, pathLine, data, yScale }}
         />
-        {data.map((d, i) => {
-          const xOrigin = i * xOffset + xPadding;
-          return (
-            <g
-              key={`linechart-dot-${i}`}
-              transform={`translate(${xOrigin},${yScale(d.value)})`}
-            >
-              <circle cx={0} cy={0} r={1} fill="url(#HappyFisherGradient)" />
-              <text fontSize="1">
-                {d.letter} {d.value}
-              </text>
-            </g>
-          );
-        })}
 
         {/* xAxis */}
         <g transform={`translate(0, ${height - padding.top - padding.bottom})`}>
