@@ -113,6 +113,7 @@ class App extends Component {
               { letter: "e", value: 30 }
             ]}
           />
+          <p>Working on making the position of each text label better.</p>
         </div>
       </div>
     );
