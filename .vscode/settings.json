@@ -1,0 +1,3 @@
+{
+  "miramac.node.options": ["--require", "babel-register"]
+}

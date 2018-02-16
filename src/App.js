@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import Circles from "./components/Circles";
 import BarChart from "./components/BarChart";
 import LineChart from "./components/LineChart";
+import Histogram from "./components/Histogram";
+import ForceDirectedGraph from "./components/ForceDirectedGraph";
+import AreaChart from "./components/AreaChart";
 import "./App.css";
 
 class App extends Component {
-  state = { linechart: true, currentCurve: "curveMonotoneX" };
+  state = { areachart: true, currentCurve: "curveMonotoneX" };
   clickHandler = name => () => {
     this.setState({
       [name]: !this.state[name]
@@ -17,7 +20,13 @@ class App extends Component {
   };
 
   render() {
-    const { circles, barchart, linechart, currentCurve } = this.state;
+    const {
+      circles,
+      barchart,
+      linechart,
+      currentCurve,
+      areachart
+    } = this.state;
     const curves = [
       "curveMonotoneX",
       "curveNatural",
@@ -33,7 +42,7 @@ class App extends Component {
           <Circles />
         </div>
         <p>
-          So, looking at the code for the above, a <code>{`<Circle />`}</code>
+          So, looking at the code for the above, a <code>{`<Circle />`}</code>{" "}
           component is not the right level of abstraction.
         </p>
         <div
@@ -83,6 +92,28 @@ class App extends Component {
           Adding a gradient to the line and points, here, doesn't seem to
           confuse things.
         </p>
+        <div>
+          <Histogram />
+        </div>
+        <div>
+          <ForceDirectedGraph />
+        </div>
+        <div
+          style={{ margin: "10px", width: areachart ? "100%" : "15%" }}
+          onClick={this.clickHandler("areachart")}
+        >
+          <AreaChart
+            height={50}
+            width={100}
+            data={[
+              { letter: "a", value: 5 },
+              { letter: "b", value: 20 },
+              { letter: "c", value: 10 },
+              { letter: "d", value: 15 },
+              { letter: "e", value: 30 }
+            ]}
+          />
+        </div>
       </div>
     );
   }
