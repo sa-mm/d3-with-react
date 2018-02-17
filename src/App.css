@@ -3,3 +3,8 @@
   text-decoration: underline;
   color: steelblue;
 }
+
+.App-charts {
+  display: flex;
+  flex-wrap: wrap;
+}

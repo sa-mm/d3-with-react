@@ -37,47 +37,48 @@ const AreaChart = props => {
   };
 
   return (
-    <SVG
-      width={myWidth + margin.right + margin.left}
-      height={myHeight + margin.top + margin.bottom}
-    >
-      <defs>
-        <SaintPetersburgGradient />
-      </defs>
-      <g transform={`translate(${margin.left},${margin.top})`}>
-        <path
-          fill="url(#SaintPetersburgGradient)"
-          stroke="black"
-          strokeLinejoin="round"
-          strokeLinecap="round"
-          strokeWidth="0.10"
-          d={pathArea(data)}
-        />
-        {data.map((d, i) => {
-          return (
-            <g
-              transform={`translate(${i * xOffset},${yScale(d.value)})`}
-              fontSize="1"
-              textAnchor="middle"
-              key={`area-chart-point-${i}`}
-            >
-              <circle cx={0} cy={0} r={0.25} fill={"steelblue"} />
-              <g transform={`translate(0,${withLocation(data, i)})`}>
-                <circle
-                  cx={0}
-                  cy={0}
-                  r={1}
-                  fill="none"
-                  strokeWidth={"0.05"}
-                  stroke={"black"}
-                />
-                <text dy={0.31}>{Math.round(d.value)}</text>
+    <div>
+      <SVG
+        width={myWidth + margin.right + margin.left}
+        height={myHeight + margin.top + margin.bottom}
+      >
+        <defs>
+          <SaintPetersburgGradient />
+        </defs>
+        <g transform={`translate(${margin.left},${margin.top})`}>
+          <path
+            fill="url(#SaintPetersburgGradient)"
+            stroke="black"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            strokeWidth="0.10"
+            d={pathArea(data)}
+          />
+          {data.map((d, i) => {
+            return (
+              <g
+                transform={`translate(${i * xOffset},${yScale(d.value)})`}
+                fontSize="1"
+                textAnchor="middle"
+                key={`area-chart-point-${i}`}
+              >
+                <circle cx={0} cy={0} r={0.25} fill={"steelblue"} />
+                <g transform={`translate(0,${withLocation(data, i)})`}>
+                  <circle
+                    cx={0}
+                    cy={0}
+                    r={1}
+                    fill="none"
+                    strokeWidth={"0.05"}
+                    stroke={"black"}
+                  />
+                  <text dy={0.31}>{Math.round(d.value)}</text>
+                </g>
               </g>
-            </g>
-          );
-        })}
-        <g transform={`translate(0,${myHeight})`}>
-          {/* <line
+            );
+          })}
+          <g transform={`translate(0,${myHeight})`}>
+            {/* <line
             strokeWidth="0.10"
             stroke="black"
             x1={0}
@@ -85,21 +86,22 @@ const AreaChart = props => {
             y1={0}
             y2={0}
           /> */}
-          {data.map((d, i) => {
-            return (
-              <g
-                key={`area-chart-${i}`}
-                transform={`translate(${xOffset * i},1)`}
-                fontSize="1"
-                textAnchor="middle"
-              >
-                <text>{d.letter}</text>
-              </g>
-            );
-          })}
+            {data.map((d, i) => {
+              return (
+                <g
+                  key={`area-chart-${i}`}
+                  transform={`translate(${xOffset * i},1)`}
+                  fontSize="1"
+                  textAnchor="middle"
+                >
+                  <text>{d.letter}</text>
+                </g>
+              );
+            })}
+          </g>
         </g>
-      </g>
-    </SVG>
+      </SVG>
+    </div>
   );
 };
 

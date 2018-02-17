@@ -28,33 +28,35 @@ const BarChart = props => {
     .range([height - padding, padding]);
 
   return (
-    <SVG height={height} width={width}>
-      <defs>
-        <RectGradient />
-      </defs>
-      <g>
-        {data.map((d, i) => {
-          return (
-            <rect
-              key={`rect${i}`}
-              x={1 + padding + i * barWidth}
-              y={yScale(d[1])}
-              width={barWidth - 2}
-              height={height - padding - yScale(d[1])}
-              fill="url(#RectGradient)"
-            />
-          );
-        })}
-      </g>
-      <BottomAxis
-        data={data}
-        height={height}
-        width={width - padding - 1}
-        barWidth={barWidth}
-        offset={padding}
-      />
-      <LeftAxis {...{ height, data }} offset={padding} scale={yScale} />
-    </SVG>
+    <div>
+      <SVG height={height} width={width}>
+        <defs>
+          <RectGradient />
+        </defs>
+        <g>
+          {data.map((d, i) => {
+            return (
+              <rect
+                key={`rect${i}`}
+                x={1 + padding + i * barWidth}
+                y={yScale(d[1])}
+                width={barWidth - 2}
+                height={height - padding - yScale(d[1])}
+                fill="url(#RectGradient)"
+              />
+            );
+          })}
+        </g>
+        <BottomAxis
+          data={data}
+          height={height}
+          width={width - padding - 1}
+          barWidth={barWidth}
+          offset={padding}
+        />
+        <LeftAxis {...{ height, data }} offset={padding} scale={yScale} />
+      </SVG>
+    </div>
   );
 };
 
