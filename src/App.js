@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import Circles from "./components/Circles";
 import BarChart from "./components/BarChart";
 import LineChart from "./components/LineChart";
-import Histogram from "./components/Histogram";
-import ForceDirectedGraph from "./components/ForceDirectedGraph";
 import AreaChart from "./components/AreaChart";
 import YearsAreaChart from "./components/YearsAreaChart";
 import "./App.css";
@@ -100,12 +98,6 @@ class App extends Component {
               and points, here, doesn't seem to confuse things.
             </p>
           </div>
-          {/* <div>
-          <Histogram />
-        </div>
-        <div>
-          <ForceDirectedGraph />
-        </div> */}
           <div style={{ margin: "10px", width: "15%" }}>
             <div onClick={this.clickHandler("AreaChart")}>
               {this.displayViz("AreaChart")}
@@ -116,10 +108,15 @@ class App extends Component {
             <div onClick={this.clickHandler("YearsAreaChart")}>
               {this.displayViz("YearsAreaChart")}
             </div>
+            <p>
+              Another area chart with a not yet functional "crosshairs" overlay.
+            </p>
           </div>
         </div>
         <hr />
-        <div>{this.displayViz(currentComponent)}</div>
+        <div style={{ margin: "10px" }}>
+          {this.displayViz(currentComponent)}
+        </div>
       </div>
     );
   }
