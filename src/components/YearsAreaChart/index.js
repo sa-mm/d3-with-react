@@ -1,2 +1,2 @@
-import YearsAreaChart from "./YearsAreaChart";
-export default YearsAreaChart;
+import YearsAreaChartContainer from "./YearsAreaChartContainer";
+export default YearsAreaChartContainer;
