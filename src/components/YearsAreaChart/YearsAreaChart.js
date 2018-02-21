@@ -40,8 +40,7 @@ const YearsAreaChart = props => {
           onMouseMove={handleMouseMove({
             xScale,
             yScale,
-            pathArea,
-            data
+            pathArea
           })}
           onMouseLeave={handleMouseLeave}
           onClick={handleChartClick}

@@ -46,8 +46,9 @@ class YearsAreaChartContainer extends React.Component {
     };
   }
 
-  handleMouseMove = ({ pathArea, xScale, yScale, data }) => event => {
-    const { lockMarker, margin, width, height } = this.state;
+  handleMouseMove = ({ pathArea, xScale, yScale }) => event => {
+    const { lockMarker } = this.state;
+    const { data } = this.props;
 
     if (lockMarker) return null;
 
@@ -58,7 +59,7 @@ class YearsAreaChartContainer extends React.Component {
     const { x, y } = point.matrixTransform(this.svg.getScreenCTM().inverse());
 
     this.setState((prevState, props) => {
-      const { circleOverlay, hLine, vLine } = prevState;
+      const { circleOverlay, hLine, vLine, margin, width, height } = prevState;
       return {
         circleOverlay: {
           ...circleOverlay,
