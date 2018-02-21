@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 
-import { randomIncreasingYearValueData } from "./utils/index";
 import Circles from "./components/Circles";
 import BarChart from "./components/BarChart";
 import LineChart from "./components/LineChart";
 import AreaChart from "./components/AreaChart";
 import YearsAreaChart from "./components/YearsAreaChart";
+import ChartWithMinimap from "./components/ChartWithMinimap";
+
+import { randomIncreasingYearValueData } from "./utils/index";
+
 import "./App.css";
 
 class App extends Component {
@@ -37,7 +40,8 @@ class App extends Component {
       AreaChart: props => <AreaChart height={50} width={100} />,
       YearsAreaChart: props => (
         <YearsAreaChart data={randomIncreasingYearValueData(300)} />
-      )
+      ),
+      ChartWithMinimap: props => <ChartWithMinimap data={[1, 2, 3]} />
     };
 
     const vizsss = Object.keys(this.vizs);
@@ -115,6 +119,12 @@ class App extends Component {
             <p>
               Another area chart with a not yet functional "crosshairs" overlay.
             </p>
+          </div>
+          <div style={{ margin: "10px", width: "15%" }}>
+            <div onClick={this.clickHandler("ChartWithMinimap")}>
+              {this.displayViz("ChartWithMinimap")}
+            </div>
+            <p />
           </div>
         </div>
         <hr />
