@@ -1,69 +1,83 @@
 import React from "react";
+import { intersect, shape } from "svg-intersections";
+import { area } from "d3-shape";
+import { scaleLinear } from "d3-scale";
+import { extent } from "d3-array";
+
 import YearsAreaChart from "./YearsAreaChart";
 
-import { intersect, shape } from "svg-intersections";
-
 class YearsAreaChartContainer extends React.Component {
-  state = {
-    mouseOnChart: false,
-    lockMarker: false,
-    circleOverlay: { cx: 2, cy: 2, r: 2 },
-    hLine: {
-      x1: 0,
-      y1: 0,
-      x2: 4,
-      y2: 0,
-      stroke: "lightgrey",
-      strokeWidth: "0.1"
-    },
-    vLine: {
-      x1: 0,
-      y1: 0,
-      x2: 0,
-      y2: 0,
-      stroke: "lightgrey",
-      strokeWidth: "0.1"
-    }
-  };
+  constructor(props) {
+    super(props);
 
-  handleMouseMove = ({
-    pathArea,
-    xScale,
-    yScale,
-    data,
-    margin,
-    height,
-    width
-  }) => event => {
-    const { lockMarker } = this.state;
+    const margin = {
+      top: 5,
+      right: 5,
+      bottom: 5,
+      left: 5
+    };
+
+    const width = 100 - margin.right - margin.left;
+    const height = 50 - margin.top - margin.bottom;
+
+    this.state = {
+      margin,
+      width,
+      height,
+      mouseOnChart: false,
+      lockMarker: false,
+      circleOverlay: { cx: 0, cy: 0, r: 2 },
+      hLine: {
+        x1: 0,
+        y1: 0,
+        x2: 0,
+        y2: 0,
+        stroke: "lightgrey",
+        strokeWidth: "0.1"
+      },
+      vLine: {
+        x1: 0,
+        y1: 0,
+        x2: 0,
+        y2: 0,
+        stroke: "lightgrey",
+        strokeWidth: "0.1"
+      }
+    };
+  }
+
+  handleMouseMove = ({ pathArea, xScale, yScale, data }) => event => {
+    const { lockMarker, margin, width, height } = this.state;
+
     if (lockMarker) return null;
 
-    let point = this.svg.createSVGPoint();
+    const point = this.svg.createSVGPoint();
     point.x = event.clientX;
     point.y = event.clientY;
-    point = point.matrixTransform(this.svg.getScreenCTM().inverse());
+
+    const { x, y } = point.matrixTransform(this.svg.getScreenCTM().inverse());
 
     this.setState((prevState, props) => {
       const { circleOverlay, hLine, vLine } = prevState;
       return {
         circleOverlay: {
           ...circleOverlay,
-          cx: point.x - margin.left,
-          cy: point.y - margin.top
+          cx: x - margin.left,
+          cy: y - margin.top
         },
         mouseOnChart: true,
         hLine: {
           ...hLine,
           x1: 0,
-          y1: point.y - margin.top,
+          y1: y - margin.top,
           x2: width,
-          y2: point.y - margin.top
+          y2: y - margin.top
         },
         vLine: {
           ...vLine,
-          x1: point.x - margin.left,
+          x1: x - margin.left,
           y1: 0,
-          x2: point.x - margin.left,
+          x2: x - margin.left,
           y2: height
         }
       };
@@ -72,7 +86,7 @@ class YearsAreaChartContainer extends React.Component {
     const { circleOverlay } = this.state;
 
     const path = pathArea(data);
-    var { points } = intersect(
+    const { points } = intersect(
       shape("path", { d: path }),
       shape("circle", {
         ...circleOverlay
@@ -80,7 +94,16 @@ class YearsAreaChartContainer extends React.Component {
     );
 
     if (points.length > 0) {
-      // console.log(xScale.invert(points[0].x));
+      const convertYear = x => Math.round(xScale.invert(x));
+      const year1 = convertYear(points[0].x);
+      const year2 = convertYear(points[1].x);
+
+      const convertValue = y => Math.round(yScale.invert(y));
+      const v1 = convertValue(points[0].y);
+      const v2 = convertValue(points[1].y);
+
+      console.log(year1 + ":", v1);
+      console.log(year2 + ":", v2);
     }
   };
 
@@ -103,18 +126,50 @@ class YearsAreaChartContainer extends React.Component {
   };
 
   render() {
+    const { data } = this.props;
     const {
+      margin,
+      width,
+      height,
       mouseOnChart,
       lockMarker,
       circleOverlay,
       hLine,
       vLine
     } = this.state;
+
+    const valuesExtent = extent(data, d => d.value);
+    const yScale = scaleLinear()
+      .domain(valuesExtent)
+      .range([height, 0]);
+
+    const yearsExtent = extent(data, d => d.year);
+    const xScale = scaleLinear()
+      .domain(yearsExtent)
+      .range([0, width]);
+
+    const pathArea = area()
+      .x(d => xScale(d.year))
+      .y1(d => yScale(d.value))
+      .y0(yScale(valuesExtent[0]));
+
     return (
       <YearsAreaChart
+        {...{
+          data,
+          margin,
+          width,
+          height,
+          mouseOnChart,
+          lockMarker,
+          circleOverlay,
+          hLine,
+          vLine,
+          xScale,
+          yScale,
+          pathArea
+        }}
         svgRef={svg => (this.svg = svg)}
-        {...this.props}
-        {...{ mouseOnChart, lockMarker, circleOverlay, hLine, vLine }}
         handleMouseMove={this.handleMouseMove}
         handleMouseLeave={this.handleMouseLeave}
         handleChartClick={this.handleChartClick}

@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+
+import { randomIncreasingYearValueData } from "./utils/index";
 import Circles from "./components/Circles";
 import BarChart from "./components/BarChart";
 import LineChart from "./components/LineChart";
@@ -33,7 +35,9 @@ class App extends Component {
         />
       ),
       AreaChart: props => <AreaChart height={50} width={100} />,
-      YearsAreaChart: props => <YearsAreaChart />
+      YearsAreaChart: props => (
+        <YearsAreaChart data={randomIncreasingYearValueData(300)} />
+      )
     };
 
     const vizsss = Object.keys(this.vizs);
