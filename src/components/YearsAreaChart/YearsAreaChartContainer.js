@@ -154,6 +154,8 @@ class YearsAreaChartContainer extends React.Component {
       .y1(d => yScale(d.value))
       .y0(yScale(valuesExtent[0]));
 
+    const svgRef = svg => (this.svg = svg);
+
     return (
       <YearsAreaChart
         {...{
@@ -168,9 +170,9 @@ class YearsAreaChartContainer extends React.Component {
           vLine,
           xScale,
           yScale,
-          pathArea
+          pathArea,
+          svgRef
         }}
-        svgRef={svg => (this.svg = svg)}
         handleMouseMove={this.handleMouseMove}
         handleMouseLeave={this.handleMouseLeave}
         handleChartClick={this.handleChartClick}
