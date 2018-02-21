@@ -22,5 +22,9 @@
     "deploy": "react-scripts build && surge ./build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "jest": "^22.4.0",
+    "jest-cli": "^22.4.0"
   }
 }
