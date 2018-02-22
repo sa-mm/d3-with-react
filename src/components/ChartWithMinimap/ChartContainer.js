@@ -12,9 +12,16 @@ import { Minimap } from "./Minimap";
 class ChartContainer extends React.Component {
   constructor(props) {
     super(props);
-    const minimapWidth = 100;
-    const minimapHeight = 10;
+    const minimapMargin = {
+      top: 0.5,
+      right: 5,
+      bottom: 5,
+      left: 5
+    };
+    const minimapWidth = 100 - minimapMargin.right - minimapMargin.left;
+    const minimapHeight = 15 - minimapMargin.top - minimapMargin.right;
     this.state = {
+      minimapMargin,
       minimapWidth,
       minimapHeight,
       lowerBoundMarker: {
@@ -26,6 +33,18 @@ class ChartContainer extends React.Component {
       upperBoundMarker: {
         x1: minimapWidth / 2 + 2.5,
         y1: 0,
+        x2: minimapWidth / 2 + 2.5,
+        y2: minimapHeight
+      },
+      topMarker: {
+        x1: minimapWidth / 2 - 2.5,
+        y1: 0,
+        x2: minimapWidth / 2 + 2.5,
+        y2: 0
+      },
+      bottomMarker: {
+        x1: minimapWidth / 2 - 2.5,
+        y1: minimapHeight,
         x2: minimapWidth / 2 + 2.5,
         y2: minimapHeight
       },
@@ -42,11 +61,6 @@ class ChartContainer extends React.Component {
   }
 
   componentDidMount() {
-    // this.chartBounds({
-    //   xScale: this.xScale,
-    //   yScale: this.yScale,
-    //   linePath: this.linePath
-    // });
     const { data } = this.props;
     const { lowerBoundMarker, upperBoundMarker } = this.state;
     const path = this.linePathFn()(data);
@@ -89,25 +103,54 @@ class ChartContainer extends React.Component {
   };
 
   handleMarkerDrag = ({ xScale, yScale, linePath }) => event => {
-    const { isDragging, currentMarker } = this.state;
+    const { isDragging, currentMarker, minimapMargin } = this.state;
 
     if (!isDragging) return null;
 
     const point = this.minimapSvg.createSVGPoint();
     point.x = event.clientX;
     point.y = event.clientY;
-    const { x } = point.matrixTransform(
-      this.minimapSvg.getScreenCTM().inverse()
-    );
+    let { x } = point.matrixTransform(this.minimapSvg.getScreenCTM().inverse());
+
+    // handles the offset from the margin
+    x = x - minimapMargin.left;
 
     this.setState((prevState, props) => {
+      const {
+        topMarker,
+        bottomMarker,
+        upperBoundMarker,
+        lowerBoundMarker,
+        minimapWidth
+      } = prevState;
+
       // better way to do this?
       const boundMarker = prevState[currentMarker + "BoundMarker"];
+
+      let markerWidth;
+      if (currentMarker === "lower") {
+        markerWidth = upperBoundMarker.x1 - x;
+      } else {
+        markerWidth = x - lowerBoundMarker.x1;
+      }
+
+      if (markerWidth < 1) return null;
+
       return {
         [currentMarker + "BoundMarker"]: {
           ...boundMarker,
           x1: x,
           x2: x
+        },
+        topMarker: {
+          ...topMarker,
+          x1: currentMarker === "lower" ? x : x - markerWidth,
+          x2: currentMarker === "lower" ? x + markerWidth : x
+        },
+        bottomMarker: {
+          ...bottomMarker,
+          x1: currentMarker === "lower" ? x : x - markerWidth,
+          x2: currentMarker === "lower" ? x + markerWidth : x
         }
       };
     }, this.chartBounds({ xScale, yScale, linePath }));
@@ -186,12 +229,15 @@ class ChartContainer extends React.Component {
   render() {
     const { data } = this.props;
     const {
+      minimapMargin,
       minimapWidth,
       minimapHeight,
       lowerBoundMarker,
       upperBoundMarker,
       chartData,
-      chartMargin
+      chartMargin,
+      topMarker,
+      bottomMarker
     } = this.state;
 
     const minimapSvgRef = e => (this.minimapSvg = e);
@@ -199,7 +245,15 @@ class ChartContainer extends React.Component {
       <div>
         <Chart data={chartData} margin={chartMargin} />
         <Minimap
-          {...{ data, lowerBoundMarker, upperBoundMarker, minimapSvgRef }}
+          {...{
+            data,
+            lowerBoundMarker,
+            upperBoundMarker,
+            topMarker,
+            bottomMarker,
+            minimapSvgRef
+          }}
+          margin={minimapMargin}
           width={minimapWidth}
           height={minimapHeight}
           xScale={this.xScaleFn()}
