@@ -12,6 +12,8 @@ import {
   randomYearValueData
 } from "./utils/dataGenerators";
 
+import chartList from "./data/chartList";
+
 import "./App.css";
 
 class App extends Component {
@@ -93,54 +95,16 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-charts">
-          <div style={{ margin: "10px", width: "15%" }}>
-            <div onClick={this.clickHandler("Circles")}>
-              {this.displayViz("Circles")}
-            </div>
-            <p>
-              So, looking at the code for the above, a{" "}
-              <code>{`<Circle />`}</code> component is not the right level of
-              abstraction.
-            </p>
-          </div>
-          <div style={{ margin: "10px", width: "15%" }}>
-            <div onClick={this.clickHandler("BarChart")}>
-              {this.displayViz("BarChart")}
-            </div>
-            <p>
-              Gradients like that look a bit odd with charts. An{" "}
-              <code>{`<Axis />`}</code> component might be better.
-            </p>
-          </div>
-          <div style={{ margin: "10px", width: "15%" }}>
-            <div onClick={this.clickHandler("LineChart")}>
-              {this.displayViz("LineChart", { hiddenSelect: true })}
-            </div>
-            <p>
-              A line chart using different curves. Adding a gradient to the line
-              and points, here, doesn't seem to confuse things.
-            </p>
-          </div>
-          <div style={{ margin: "10px", width: "15%" }}>
-            <div onClick={this.clickHandler("AreaChart")}>
-              {this.displayViz("AreaChart")}
-            </div>
-            <p>Working on making the position of each text label better.</p>
-          </div>
-          <div style={{ margin: "10px", width: "15%" }}>
-            <div onClick={this.clickHandler("YearsAreaChart")}>
-              {this.displayViz("YearsAreaChart")}
-            </div>
-            <p>
-              Another area chart with a not yet functional "crosshairs" overlay.
-            </p>
-          </div>
-          <div style={{ margin: "10px", width: "15%" }}>
-            <div onClick={this.clickHandler("ChartWithMinimap")}>
-              {this.displayViz("ChartWithMinimap")}
-            </div>
-            <p>Definitely needs work…</p>
-          </div>
+          {chartList.map(({ name, props, desc }, i) => {
+            return (
+              <div key={`chart-list-${i}`} className="App-minichart">
+                <div onClick={this.clickHandler(name)}>
+                  {this.displayViz(name, props)}
+                </div>
+                <p>{desc}</p>
+              </div>
+            );
+          })}
         </div>
         <hr />
         <div style={{ margin: "10px" }}>
