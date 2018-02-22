@@ -7,7 +7,10 @@ import AreaChart from "./components/AreaChart";
 import YearsAreaChart from "./components/YearsAreaChart";
 import ChartWithMinimap from "./components/ChartWithMinimap";
 
-import { randomIncreasingYearValueData } from "./utils/index";
+import {
+  randomIncreasingYearValueData,
+  randomYearValueData
+} from "./utils/dataGenerators";
 
 import "./App.css";
 
@@ -39,9 +42,21 @@ class App extends Component {
       ),
       AreaChart: props => <AreaChart height={50} width={100} />,
       YearsAreaChart: props => (
-        <YearsAreaChart data={randomIncreasingYearValueData(300)} />
+        <YearsAreaChart
+          data={randomIncreasingYearValueData({
+            startYear: 1700,
+            duration: 300
+          })}
+        />
       ),
-      ChartWithMinimap: props => <ChartWithMinimap data={[1, 2, 3]} />
+      ChartWithMinimap: props => (
+        <ChartWithMinimap
+          data={randomYearValueData({
+            startYear: 1000,
+            duration: 1000
+          })}
+        />
+      )
     };
 
     const vizsss = Object.keys(this.vizs);
@@ -124,7 +139,7 @@ class App extends Component {
             <div onClick={this.clickHandler("ChartWithMinimap")}>
               {this.displayViz("ChartWithMinimap")}
             </div>
-            <p />
+            <p>Definitely needs work…</p>
           </div>
         </div>
         <hr />
