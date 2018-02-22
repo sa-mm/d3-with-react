@@ -120,8 +120,7 @@ class ChartContainer extends React.Component {
         topMarker,
         bottomMarker,
         upperBoundMarker,
-        lowerBoundMarker,
-        minimapWidth
+        lowerBoundMarker
       } = prevState;
 
       // better way to do this?
