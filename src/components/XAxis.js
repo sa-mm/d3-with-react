@@ -83,12 +83,13 @@ export const XAxisTime = ({
               <circle
                 cx="0"
                 cy="0"
-                r="1"
+                r="2"
                 fill="steelblue"
                 onMouseEnter={mouseEnterHandler(i)}
                 onMouseLeave={mouseLeaveHandler(i)}
+                onTouchStart={mouseEnterHandler(i)}
               />
-              <text dy={1.75} dx={0.75} transform={`rotate(45)`}>
+              <text dy={3} dx={2.5} transform={`rotate(45)`}>
                 {tick.toDateString()}
               </text>
             </g>
