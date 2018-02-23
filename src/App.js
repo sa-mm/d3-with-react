@@ -6,6 +6,7 @@ import LineChart from "./components/LineChart";
 import AreaChart from "./components/AreaChart";
 import YearsAreaChart from "./components/YearsAreaChart";
 import ChartWithMinimap from "./components/ChartWithMinimap";
+import DroopyEyeTimeline from "./components/DroopyEyeTimeline";
 
 import {
   randomIncreasingYearValueData,
@@ -13,6 +14,7 @@ import {
 } from "./utils/dataGenerators";
 
 import chartList from "./data/chartList";
+import droopyEyeData from "./data/timelineData";
 
 import "./App.css";
 
@@ -58,7 +60,8 @@ class App extends Component {
             duration: 1000
           })}
         />
-      )
+      ),
+      DroopyEyeTimeline: props => <DroopyEyeTimeline data={droopyEyeData} />
     };
 
     const vizsss = Object.keys(this.vizs);

@@ -26,6 +26,10 @@ const chartList = [
   {
     name: "ChartWithMinimap",
     desc: "Definitely needs work…"
+  },
+  {
+    name: "DroopyEyeTimeline",
+    desc: "Timeline of my droopy eye. Tooltips for now. Hover over the dates."
   }
 ];
 
