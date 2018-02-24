@@ -1,24 +1,18 @@
 import React from "react";
-import { XAxisTime } from "../XAxis";
-import withTooltip from "../withTooltip";
+import XAxisTime from "./XAxisTimeContainer";
+import { SkyGradient, PhoenixStart, SnowAgain } from "../Gradients";
 
 const DroopyEyeTimeline = props => {
-  const {
-    vb,
-    margin,
-    width,
-    height,
-    data,
-    xScale,
-    hasHover,
-    mouseEnterHandler,
-    mouseLeaveHandler
-  } = props;
+  const { vb, margin, width, height, data, xScale } = props;
   return (
     <div>
       <svg viewBox={`0 0 ${vb.width} ${vb.height}`}>
+        <defs>
+          <SkyGradient />
+          <PhoenixStart />
+          <SnowAgain />
+        </defs>
         <g transform={`translate(${margin.left},${margin.top})`}>
-          {/* <rect x="0" y="0" width={width} height={height} fill="grey" /> */}
           <XAxisTime
             data={data}
             accessor="date"
@@ -26,9 +20,6 @@ const DroopyEyeTimeline = props => {
             transform={`translate(0,${height / 2})`}
             width={width}
             height={height}
-            hasHover={hasHover}
-            mouseEnterHandler={mouseEnterHandler}
-            mouseLeaveHandler={mouseLeaveHandler}
           />
         </g>
       </svg>
@@ -36,4 +27,4 @@ const DroopyEyeTimeline = props => {
   );
 };
 
-export default withTooltip(DroopyEyeTimeline);
+export default DroopyEyeTimeline;
