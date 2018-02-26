@@ -24,6 +24,7 @@ class DroopyEyeTimelineContainer extends React.Component {
       height: vb.height - margin.top - margin.bottom
     };
   }
+
   render() {
     const { vb, margin, width, height } = this.state;
     const { data } = this.props;
