@@ -29,7 +29,8 @@ const chartList = [
   },
   {
     name: "DroopyEyeTimeline",
-    desc: "Timeline of my droopy eye. Tooltips for now. Hover over the dates."
+    desc:
+      "Timeline of my droopy eye. Tooltips for now. Click for event description."
   }
 ];
 
