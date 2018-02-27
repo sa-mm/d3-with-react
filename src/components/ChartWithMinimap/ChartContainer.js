@@ -61,37 +61,10 @@ class ChartContainer extends React.Component {
   }
 
   componentDidMount() {
-    const { data } = this.props;
-    const { lowerBoundMarker, upperBoundMarker } = this.state;
-    const path = this.linePathFn()(data);
-
-    let points1, points2;
-    points1 = intersect(
-      shape("path", { d: path }),
-      shape("line", {
-        ...lowerBoundMarker
-      })
-    ).points;
-
-    points2 = intersect(
-      shape("path", { d: path }),
-      shape("line", {
-        ...upperBoundMarker
-      })
-    ).points;
-
-    let xVal1, xVal2;
-    if (points1.length > 0) {
-      xVal1 = this.xScaleFn().invert(points1[0].x);
-    }
-
-    if (points2.length > 0) {
-      xVal2 = this.xScaleFn().invert(points2[0].x);
-    }
-
-    if (xVal1 && xVal2) {
-      this.setChartData(xVal1, xVal2);
-    }
+    const xScale = this.xScaleFn();
+    const yScale = this.yScaleFn();
+    const linePath = this.linePathFn();
+    this.chartBounds({ xScale, yScale, linePath });
   }
 
   handleMarkerMouseDown = currentMarker => event => {
@@ -155,7 +128,11 @@ class ChartContainer extends React.Component {
     }, this.chartBounds({ xScale, yScale, linePath }));
   };
 
-  chartBounds = ({ xScale, yScale, linePath }) => {
+  chartBounds = ({
+    xScale = this.xScaleFn(),
+    yScale = this.yScaleFn(),
+    linePath = this.linePathFn()
+  }) => {
     const { data } = this.props;
     const { lowerBoundMarker, upperBoundMarker } = this.state;
     const path = linePath(data);
