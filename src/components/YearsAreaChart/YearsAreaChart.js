@@ -1,7 +1,8 @@
 import React from "react";
 
-import { XAxis } from "./XAxis";
-import { YAxis } from "./YAxis";
+import { XAxis } from "../XAxis";
+import { YAxis } from "../YAxis";
+
 import { LemonGate } from "../Gradients";
 
 const YearsAreaChart = props => {
