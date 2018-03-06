@@ -25,7 +25,7 @@ const chartList = [
   },
   {
     name: "ChartWithMinimap",
-    desc: "Definitely needs work…"
+    desc: "Minimap. Needs work."
   },
   {
     name: "DroopyEyeTimeline",

@@ -53,6 +53,7 @@ class App extends Component {
           })}
         />
       ),
+      DroopyEyeTimeline: props => <DroopyEyeTimeline data={droopyEyeData} />,
       ChartWithMinimap: props => (
         <ChartWithMinimap
           data={randomYearValueData({
@@ -60,8 +61,7 @@ class App extends Component {
             duration: 1000
           })}
         />
-      ),
-      DroopyEyeTimeline: props => <DroopyEyeTimeline data={droopyEyeData} />
+      )
     };
 
     const vizsss = Object.keys(this.vizs);

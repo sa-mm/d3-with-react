@@ -31,6 +31,12 @@ export const XAxisTime = ({
       />
       {scale.ticks(data.length).map((tick, i) => {
         const xCoordinate = scale(tick);
+        const dates = Object.values(data).map(e =>
+          new Date(e.date).toDateString()
+        );
+        const relIdx = dates.findIndex(
+          dateStr => dateStr === tick.toDateString()
+        );
         return (
           <g key={`x-axis-tick-${i}`} fontSize={1}>
             <g transform={`translate(${width / 2},${-height / 4})`}>
@@ -38,7 +44,7 @@ export const XAxisTime = ({
                 textAnchor="middle"
                 style={{ display: selectedEvent === i ? "initial" : "none" }}
               >
-                {data[i].event}
+                {relIdx > 0 && data[relIdx].event}
               </text>
             </g>
             <g transform={`translate(${xCoordinate},0)`}>

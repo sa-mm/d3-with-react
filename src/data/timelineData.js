@@ -27,7 +27,11 @@ const timelineData = [
   {
     date: "2018-02-22",
     event:
-      "Wake up and droopy eye is BACK. Go to job interview with droopy eye. TBC"
+      "Wake up and droopy eye is BACK. Go to job interview with droopy eye."
+  },
+  {
+    date: "2018-02-25",
+    event: "Droopy eye is finally gone."
   }
 ];
 
