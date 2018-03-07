@@ -3,37 +3,37 @@ import { XAxisTime } from "../XAxisTime";
 
 import { timeParse } from "d3-time-format";
 import { isEqual, findIndex } from "lodash";
+import { flow, reduce } from "lodash/fp";
 
 class XAxisTimeContainer extends React.Component {
   constructor(props) {
     super(props);
     const { scale, data } = props;
-    var parseTime = timeParse("%Y-%m-%d");
 
-    const ticksWithData = scale.ticks(data.length).reduce((acc, tick) => {
-      const matchedIndex = findIndex(data, e =>
-        isEqual(tick, parseTime(e.date))
-      );
-      if (matchedIndex >= 0) {
-        const { event } = data[matchedIndex];
-        return [...acc, { tick, event }];
-      }
-      return [...acc, { tick }];
-    }, []);
+    // Returns an array with ticks + events.
+    const transformTicks = dataFromProps => ticks => {
+      const parseTime = timeParse("%Y-%m-%d");
 
-    const dates = data.map(e => parseTime(e.date).toDateString());
-    const ticks = scale.ticks(data.length).map(e => e.toDateString());
-    const relTicks = ticks.reduce((acc, dateStr, i) => {
-      if (dates.some(e => e === dateStr)) {
-        return [...acc, { idx: i, str: dateStr }];
-      }
-      return acc;
-    }, []);
+      const ticksReducer = (acc, tick) => {
+        const matchedIndex = findIndex(dataFromProps, ({ date }) =>
+          isEqual(tick, parseTime(date))
+        );
+
+        if (matchedIndex >= 0) {
+          const { event } = dataFromProps[matchedIndex];
+          return [...acc, { tick, event }];
+        }
+
+        return [...acc, { tick }];
+      };
+
+      return reduce(ticksReducer, [])(ticks);
+    };
+
+    const ticksWithData = flow(scale.ticks, transformTicks(data))(data.length);
 
     this.state = {
-      currentIndex: 0,
       selectedEvent: 0,
-      relTicks,
       ticksWithData
     };
   }
@@ -54,16 +54,22 @@ class XAxisTimeContainer extends React.Component {
   }
 
   incrementEvent = () => {
-    const { relTicks, currentIndex } = this.state;
-    const atLastTick = relTicks.length - 1 === currentIndex;
-    if (atLastTick) {
+    const { selectedEvent, ticksWithData } = this.state;
+
+    // Gets the distance between the current and next events on the timeline.
+    // If they're next to each other, the distance is 0.
+    const getDistance = (idx, data) =>
+      data.slice(idx + 1).findIndex(e => e.event);
+
+    const dist = getDistance(selectedEvent, ticksWithData);
+
+    if (dist < 0) {
       clearInterval(this.eventInterval);
     } else {
       this.setState((prevState, props) => {
-        const { relTicks, currentIndex } = prevState;
-        const nextIndex = currentIndex + 1;
-        const nextEvent = relTicks[nextIndex].idx;
-        return { selectedEvent: nextEvent, currentIndex: nextIndex };
+        const { selectedEvent, ticksWithData } = prevState;
+        const incr = getDistance(selectedEvent, ticksWithData) + 1;
+        return { selectedEvent: selectedEvent + incr };
       });
     }
   };
