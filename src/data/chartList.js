@@ -31,6 +31,11 @@ const chartList = [
     name: "DroopyEyeTimeline",
     desc:
       "Timeline of my droopy eye. Tooltips for now. Click for event description."
+  },
+  {
+    name: "ChordDiagram",
+    desc:
+      "Example of a chord diagram. Recreating https://bl.ocks.org/mbostock/4062006. Relevant work: https://github.com/langfordG/react-chord-diagram."
   }
 ];
 
