@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - "node"
+
+install:
+  - npm install
+
+before_deploy:
+  - npm run build
+
+deploy:
+  skip_cleanup: true
+  provider: surge
+  project: ./build
+  domain: http://jolly-stage.surge.sh
