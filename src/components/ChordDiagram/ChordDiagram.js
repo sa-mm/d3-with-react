@@ -1,6 +1,6 @@
 import React from "react";
 import { chord, ribbon } from "d3-chord";
-import { formatPrefix } from "d3-format";
+// import { formatPrefix } from "d3-format";
 import { descending, range } from "d3-array";
 import { arc } from "d3-shape";
 import { scaleOrdinal } from "d3-scale";
@@ -11,7 +11,7 @@ const ChordDiagram = props => {
   const outerRadius = Math.min(width, height) * 0.5 - 40;
   const innerRadius = outerRadius - 30;
 
-  const formatValue = formatPrefix(",.0", 1e3);
+  // const formatValue = formatPrefix(",.0", 1e3);
 
   const d3Chord = chord()
     .padAngle(0.05)
