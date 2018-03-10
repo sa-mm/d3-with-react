@@ -8,9 +8,9 @@ import { rgb } from "d3-color";
 
 const ChordDiagram = props => {
   const { data, vb, margin, height, width } = props;
-  const outerRadius = Math.min(width, height) * 0.5 - 40;
-  const innerRadius = outerRadius - 30;
-
+  const outerRadius = Math.min(width, height) * 0.44;
+  const innerRadius = outerRadius * 0.91;
+  const strokeWidth = Math.min(width, height) / 700;
   // const formatValue = formatPrefix(",.0", 1e3);
 
   const d3Chord = chord()
@@ -40,6 +40,7 @@ const ChordDiagram = props => {
                   <path
                     fill={color(idx)}
                     stroke={rgb(color(idx)).darker()}
+                    strokeWidth={strokeWidth}
                     d={d3Arc(group)}
                   />
                 </g>
@@ -52,6 +53,7 @@ const ChordDiagram = props => {
                     key={`chord-idx-${idx}`}
                     fill={color(chord.target.index)}
                     stroke={rgb(color(chord.target.index)).darker()}
+                    strokeWidth={strokeWidth}
                     d={d3Ribbon({ source: chord.source, target: chord.target })}
                   />
                 );

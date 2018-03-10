@@ -4,7 +4,7 @@ import ChordDiagram from "./ChordDiagram";
 class ChordDiagramContainer extends React.Component {
   constructor(props) {
     super(props);
-    const vb = { width: 700, height: 700 };
+    const vb = { width: 100, height: 100 };
     const margin = {
       top: 5,
       right: 5,
